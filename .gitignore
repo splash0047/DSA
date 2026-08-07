@@ -1,0 +1,14 @@
+# Next.js platform subfolder
+platform/node_modules/
+platform/.next/
+platform/out/
+platform/build/
+platform/next-env.d.ts
+platform/.env*.local
+
+# System/IDE files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
