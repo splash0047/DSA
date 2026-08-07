@@ -53,7 +53,7 @@ public:
        //     if (num == candidate)
         //          count++;
       //       else
-                   count--;
+//                  count--;
 //
         }
         
