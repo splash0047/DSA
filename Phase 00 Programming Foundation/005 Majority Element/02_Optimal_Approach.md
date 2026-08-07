@@ -51,9 +51,9 @@ public:
             }
             count += (num == candidate) ? 1 : -1; or
        //     if (num == candidate)
-    count++;
-else
-    count--;
+        //          count++;
+      //       else
+                   count--;
 //
         }
         
