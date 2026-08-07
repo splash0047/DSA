@@ -56,23 +56,25 @@ This transforms an $\mathcal{O}(N^2)$ exhaustive search into a single pass $\mat
 
 class Solution {
 public:
-    std::vector<int> twoSum(const std::vector<int>& nums, int target) {
-        std::unordered_map<int, int> visited;
-        int n = nums.size();
+vector<int> twoSum(vector<int>& nums, int target) {
+    unordered_map<int, int> num_map;  // Stores {num, index}
+    
+    for (int i = 0; i < nums.size(); i++) {
+        int complement = target - nums[i];
         
-        for (int i = 0; i < n; ++i) {
-            int complement = target - nums[i];
-            auto it = visited.find(complement);
-            
-            if (it != visited.end()) {
-                return {it->second, i};
-            }
-            
-            visited[nums[i]] = i;
+        // If complement exists in the map, return the indices
+        if (num_map.find(complement) != num_map.end()) {
+            return {num_map[complement], i};
         }
         
-        return {};
+        // Store the current number and its index
+        num_map[nums[i]] = i;
     }
+    
+    return {};  // This should never be reached as per the problem statement
+}
+
+
 };
 ```
 
