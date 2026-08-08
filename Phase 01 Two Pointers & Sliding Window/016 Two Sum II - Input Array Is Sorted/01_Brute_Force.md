@@ -26,20 +26,21 @@ For each element `numbers[i]`, we need to find its complement `target - numbers[
 
 ```cpp
 #include <vector>
-#include <algorithm>
 
 class Solution {
 public:
     std::vector<int> twoSum(const std::vector<int>& numbers, int target) {
         int n = numbers.size();
-        for (int i = 0; i < n - 1; ++i) {
-            int complement = target - numbers[i];
-            auto it = std::lower_bound(numbers.begin() + i + 1, numbers.end(), complement);
-            if (it != numbers.end() && *it == complement) {
-                int j = static_cast<int>(it - numbers.begin());
-                return {i + 1, j + 1};
+
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+
+                if (numbers[i] + numbers[j] == target) {
+                    return {i + 1, j + 1};
+                }
             }
         }
+
         return {};
     }
 };
