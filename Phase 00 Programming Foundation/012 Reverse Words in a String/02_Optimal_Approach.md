@@ -50,33 +50,36 @@ Consider what happens when we reverse the entire string `"the sky is blue"`:
 class Solution {
 public:
     std::string reverseWords(std::string s) {
-        // Step 1: Reverse the entire string
-        std::reverse(s.begin(), s.end());
-        
-        int n = s.length();
-        int write_idx = 0;
-        
-        for (int i = 0; i < n; ++i) {
+        // Remove extra spaces
+        int n = s.size();
+        int write = 0;
+
+        for (int i = 0; i < n; i++) {
             if (s[i] != ' ') {
-                // Insert a single space between words
-                if (write_idx != 0) {
-                    s[write_idx++] = ' ';
-                }
-                
-                int start = write_idx;
-                
-                // Copy word characters
+                if (write > 0)
+                    s[write++] = ' ';
+
                 while (i < n && s[i] != ' ') {
-                    s[write_idx++] = s[i++];
+                    s[write++] = s[i++];
                 }
-                
-                // Step 2: Reverse each word back to original character order
-                std::reverse(s.begin() + start, s.begin() + write_idx);
             }
         }
-        
-        // Step 3: Truncate trailing garbage/spaces
-        s.resize(write_idx);
+
+        s.resize(write);
+
+        // Reverse the entire string
+        std::reverse(s.begin(), s.end());
+
+        // Reverse each word
+        int start = 0;
+
+        for (int i = 0; i <= s.size(); i++) {
+            if (i == s.size() || s[i] == ' ') {
+                std::reverse(s.begin() + start, s.begin() + i);
+                start = i + 1;
+            }
+        }
+
         return s;
     }
 };
