@@ -37,32 +37,24 @@ Simulate scanning the string simultaneously from both ends towards the center. I
 ## Clean C++17 Solution
 
 ```cpp
-#include <string>
-#include <cctype>
-
 class Solution {
 public:
-    bool isPalindrome(const std::string& s) {
-        int left = 0;
-        int right = s.length() - 1;
-        
-        while (left < right) {
-            while (left < right && !std::isalnum(static_cast<unsigned char>(s[left]))) {
+    bool isPalindrome(string s) {
+        int left = 0,right = s.size() -1;
+        while(left<right){
+            if(!isalnum(s[left])){
                 left++;
             }
-            while (left < right && !std::isalnum(static_cast<unsigned char>(s[right]))) {
+            else if(!isalnum(s[right])){
                 right--;
             }
-            
-            if (std::tolower(static_cast<unsigned char>(s[left])) != 
-                std::tolower(static_cast<unsigned char>(s[right]))) {
+            else if(tolower(s[left]) != tolower(s[right])){
                 return false;
+            }else{
+                left++;
+                right--;
             }
-            
-            left++;
-            right--;
         }
-        
         return true;
     }
 };
