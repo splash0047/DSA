@@ -35,21 +35,31 @@ Simulate typing both strings into a text editor using a Stack / String buffer:
 #include <string>
 
 class Solution {
-private:
-    std::string process(const std::string& str) {
-        std::string res = "";
-        for (char c : str) {
+public:
+    bool backspaceCompare(std::string s, std::string t) {
+
+        std::string a = "";
+        std::string b = "";
+
+        for (char c : s) {
             if (c != '#') {
-                res.push_back(c);
-            } else if (!res.empty()) {
-                res.pop_back();
+                a.push_back(c);
+            } 
+            else if (!a.empty()) {
+                a.pop_back();
             }
         }
-        return res;
-    }
-public:
-    bool backspaceCompare(const std::string& s, const std::string& t) {
-        return process(s) == process(t);
+
+        for (char c : t) {
+            if (c != '#') {
+                b.push_back(c);
+            } 
+            else if (!b.empty()) {
+                b.pop_back();
+            }
+        }
+
+        return a == b;
     }
 };
 ```
