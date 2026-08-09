@@ -43,25 +43,27 @@ Think of a flexible rubber band window:
 ```cpp
 #include <vector>
 #include <algorithm>
+#include<climits>
 
 class Solution {
 public:
-    int minSubArrayLen(int target, const std::vector<int>& nums) {
-        int left = 0;
-        long long current_sum = 0;
-        int min_len = 1e9;
+    int minSubArrayLen(int target, vector<int>& nums) {
         int n = nums.size();
-        
-        for (int right = 0; right < n; ++right) {
-            current_sum += nums[right];
-            
-            while (current_sum >= target) {
-                min_len = std::min(min_len, right - left + 1);
-                current_sum -= nums[left++];
+        int i = 0, j = 0;
+        int minL = INT_MAX;
+        int sum = 0;
+
+        while(j < n){
+            sum += nums[j];
+
+            while(sum >= target){
+                minL = min(minL , j - i + 1);
+                sum -= nums[i];
+                i++;
             }
+            j++;
         }
-        
-        return min_len == 1e9 ? 0 : min_len;
+        return (minL == INT_MAX) ? 0 : minL;
     }
 };
 ```
