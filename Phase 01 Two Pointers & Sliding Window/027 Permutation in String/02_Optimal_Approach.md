@@ -47,42 +47,31 @@ Slide a fixed window of size `len1` across `s2`. Maintain a tally ledger of char
 ## Clean C++17 Solution
 
 ```cpp
-#include <string>
-
 class Solution {
-private:
-    bool isZero(const int count[26]) {
-        for (int i = 0; i < 26; ++i) {
-            if (count[i] != 0) return false;
-        }
-        return true;
-    }
 public:
-    bool checkInclusion(const std::string& s1, const std::string& s2) {
-        int len1 = s1.length();
-        int len2 = s2.length();
-        
-        if (len1 > len2) return false;
-        
-        int count[26] = {0};
-        
-        // Initialize first window
-        for (int i = 0; i < len1; ++i) {
-            count[s1[i] - 'a']++;
-            count[s2[i] - 'a']--;
-        }
-        
-        if (isZero(count)) return true;
-        
-        // Slide window of size len1 across s2
-        for (int i = len1; i < len2; ++i) {
-            count[s2[i] - 'a']--;          // Add incoming character
-            count[s2[i - len1] - 'a']++;   // Remove outgoing character
-            
-            if (isZero(count)) return true;
-        }
-        
-        return false;
+    bool checkInclusion(string s1, string s2) {
+        if (s1.length() > s2.length()) return false;
+
+    vector<int> count1(26, 0); // frequency of chars in s1
+    vector<int> count2(26, 0); // frequency of current window in s2
+
+    // Count characters in s1 and first window of s2
+    for (int i = 0; i < s1.length(); ++i) {
+        count1[s1[i] - 'a']++;
+        count2[s2[i] - 'a']++;
+    }
+
+    if (count1 == count2) return true;
+
+    // Slide the window over s2
+    for (int i = s1.length(); i < s2.length(); ++i) {
+        count2[s2[i] - 'a']++;                      // Add new char to window
+        count2[s2[i - s1.length()] - 'a']--;        // Remove old char from window
+
+        if (count1 == count2) return true;
+    }
+
+    return false;
     }
 };
 ```
