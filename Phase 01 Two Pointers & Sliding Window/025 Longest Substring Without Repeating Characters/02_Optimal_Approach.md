@@ -41,30 +41,23 @@ Imagine a sliding window stretching rightward:
 ## Clean C++17 Solution
 
 ```cpp
-#include <string>
-#include <vector>
-#include <algorithm>
-
 class Solution {
 public:
-    int lengthOfLongestSubstring(const std::string& s) {
-        std::vector<int> last_seen(256, -1);
-        int max_len = 0;
-        int left = 0;
-        int n = s.length();
-        
-        for (int right = 0; right < n; ++right) {
-            unsigned char c = static_cast<unsigned char>(s[right]);
-            
-            if (last_seen[c] >= left) {
-                left = last_seen[c] + 1;
+    int lengthOfLongestSubstring(string s) {
+        unordered_map<char, int> charIndex;
+        int maxLength = 0;
+        int left = 0; // Left pointer of the sliding window
+
+        for (int right = 0; right < s.length(); right++) {
+            if (charIndex.find(s[right]) != charIndex.end()) {
+                // Move left pointer past the last occurrence of s[right]
+                left = max(left, charIndex[s[right]] + 1);
             }
-            
-            last_seen[c] = right;
-            max_len = std::max(max_len, right - left + 1);
+            charIndex[s[right]] = right; // Update the latest index of the character
+            maxLength = max(maxLength, right - left + 1);
         }
-        
-        return max_len;
+
+        return maxLength;
     }
 };
 ```
