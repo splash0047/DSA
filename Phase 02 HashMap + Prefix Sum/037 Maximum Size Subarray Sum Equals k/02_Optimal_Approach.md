@@ -52,28 +52,27 @@
 
 class Solution {
 public:
-    int maxSubArrayLen(const std::vector<int>& nums, int k) {
-        std::unordered_map<long long, int> first_seen;
-        first_seen[0] = -1; // Base case for prefix sum 0 at virtual index -1
-        
-        long long prefix_sum = 0;
-        int max_len = 0;
-        int n = nums.size();
-        
-        for (int i = 0; i < n; ++i) {
-            prefix_sum += nums[i];
-            
-            if (first_seen.find(prefix_sum - k) != first_seen.end()) {
-                max_len = std::max(max_len, i - first_seen[prefix_sum - k]);
+    int maxSubArrayLen(std::vector<int>& nums, int k) {
+        std::unordered_map<long long, int> first;
+
+        first[0] = -1;
+
+        long long sum = 0;
+        int maxLen = 0;
+
+        for (int i = 0; i < nums.size(); i++) {
+            sum += nums[i];
+
+            if (first.find(sum - k) != first.end()) {
+                maxLen = std::max(maxLen, i - first[sum - k]);
             }
-            
-            // Store only earliest occurrence to maximize window length
-            if (first_seen.find(prefix_sum) == first_seen.end()) {
-                first_seen[prefix_sum] = i;
+
+            if (first.find(sum) == first.end()) {
+                first[sum] = i;
             }
         }
-        
-        return max_len;
+
+        return maxLen;
     }
 };
 ```
