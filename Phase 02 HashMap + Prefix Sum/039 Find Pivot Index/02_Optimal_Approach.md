@@ -49,21 +49,25 @@ $$2 \times \text{left\_sum} + \text{nums}[i] = \text{total\_sum}$$
 
 class Solution {
 public:
-    int pivotIndex(const std::vector<int>& nums) {
-        int total_sum = std::accumulate(nums.begin(), nums.end(), 0);
-        int left_sum = 0;
-        int n = nums.size();
-        
-        for (int i = 0; i < n; ++i) {
-            int right_sum = total_sum - left_sum - nums[i];
-            
-            if (left_sum == right_sum) {
+    int pivotIndex(std::vector<int>& nums) {
+        int total = 0;
+
+        for (int num : nums) {
+            total += num;
+        }
+
+        int left = 0;
+
+        for (int i = 0; i < nums.size(); i++) {
+            int right = total - left - nums[i];
+
+            if (left == right) {
                 return i;
             }
-            
-            left_sum += nums[i];
+
+            left += nums[i];
         }
-        
+
         return -1;
     }
 };
