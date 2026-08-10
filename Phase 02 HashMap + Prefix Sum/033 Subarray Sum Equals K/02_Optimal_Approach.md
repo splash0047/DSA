@@ -49,24 +49,18 @@
 
 class Solution {
 public:
-    int subarraySum(const std::vector<int>& nums, int k) {
-        std::unordered_map<int, int> prefix_counts;
-        prefix_counts[0] = 1; // Base case: prefix sum of 0 appears once before array starts
-        
-        int prefix_sum = 0;
-        int count = 0;
-        
-        for (int num : nums) {
-            prefix_sum += num;
-            
-            if (prefix_counts.find(prefix_sum - k) != prefix_counts.end()) {
-                count += prefix_counts[prefix_sum - k];
-            }
-            
-            prefix_counts[prefix_sum]++;
+    int subarraySum(vector<int>& nums, int k) {
+        map<int,int>mpp;
+        mpp[0] = 1;
+        int preSum = 0;
+        int counts = 0;
+        for(int i=0 ; i<nums.size() ; i++){
+            preSum += nums[i];
+            int remove = preSum - k;
+            counts += mpp[remove];
+            mpp[preSum] += 1 ;
         }
-        
-        return count;
+        return counts;
     }
 };
 ```
