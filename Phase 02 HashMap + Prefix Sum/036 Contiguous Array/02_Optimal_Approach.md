@@ -51,28 +51,37 @@
 #include <unordered_map>
 #include <algorithm>
 
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+
 class Solution {
 public:
-    int findMaxLength(const std::vector<int>& nums) {
-        std::unordered_map<int, int> first_seen;
-        first_seen[0] = -1; // Base case: cumulative sum of 0 occurs at index -1
-        
-        int prefix_sum = 0;
-        int max_len = 0;
-        int n = nums.size();
-        
-        for (int i = 0; i < n; ++i) {
-            prefix_sum += (nums[i] == 1 ? 1 : -1);
-            
-            if (first_seen.find(prefix_sum) != first_seen.end()) {
-                max_len = std::max(max_len, i - first_seen[prefix_sum]);
+    int findMaxLength(std::vector<int>& nums) {
+        std::unordered_map<int, int> first;
+
+        first[0] = -1;
+
+        int sum = 0;
+        int maxLen = 0;
+
+        for (int i = 0; i < nums.size(); i++) {
+
+            if (nums[i] == 0)
+                sum--;
+            else
+                sum++;
+
+            if (first.find(sum) != first.end()) {
+                maxLen = std::max(maxLen, i - first[sum]);
             } else {
-                first_seen[prefix_sum] = i; // Store only earliest occurrence
+                first[sum] = i;
             }
         }
-        
-        return max_len;
+
+        return maxLen;
     }
+};
 };
 ```
 
