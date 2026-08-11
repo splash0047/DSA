@@ -59,50 +59,58 @@ Run binary search twice:
 #include <vector>
 
 class Solution {
-private:
-    int findFirst(const std::vector<int>& nums, int target) {
-        int low = 0;
-        int high = nums.size() - 1;
-        int ans = -1;
-        
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            
-            if (nums[mid] >= target) {
-                if (nums[mid] == target) ans = mid;
-                high = mid - 1;
-            } else {
-                low = mid + 1;
-            }
-        }
-        
-        return ans;
-    }
-    
-    int findLast(const std::vector<int>& nums, int target) {
-        int low = 0;
-        int high = nums.size() - 1;
-        int ans = -1;
-        
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            
-            if (nums[mid] <= target) {
-                if (nums[mid] == target) ans = mid;
-                low = mid + 1;
-            } else {
-                high = mid - 1;
-            }
-        }
-        
-        return ans;
-    }
 public:
-    std::vector<int> searchRange(const std::vector<int>& nums, int target) {
-        int first = findFirst(nums, target);
-        if (first == -1) return {-1, -1};
-        int last = findLast(nums, target);
-        return {first, last};
+
+    int findFirst(vector<int>& nums, int target) {
+        int left = 0;
+        int right = nums.size() - 1;
+        int ans = -1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                ans = mid;
+                right = mid - 1;       // search left
+            }
+            else if (nums[mid] < target) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return ans;
+    }
+
+
+    int findLast(vector<int>& nums, int target) {
+        int left = 0;
+        int right = nums.size() - 1;
+        int ans = -1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                ans = mid;
+                left = mid + 1;        // search right
+            }
+            else if (nums[mid] < target) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return ans;
+    }
+
+
+    vector<int> searchRange(vector<int>& nums, int target) {
+        return {findFirst(nums, target), findLast(nums, target)};
     }
 };
 ```
