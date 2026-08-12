@@ -64,17 +64,17 @@ class Solution {
 private:
     bool canMake(const std::vector<int>& bloomDay, int m, int k, int day) {
         int bouquets = 0;
-        int adjacent = 0;
+        int count = 0;
         
         for (int bd : bloomDay) {
             if (bd <= day) {
-                adjacent++;
-                if (adjacent == k) {
+                count++;
+                if (count == k) {
                     bouquets++;
-                    adjacent = 0;
+                    count = 0;
                 }
             } else {
-                adjacent = 0;
+                count = 0;
             }
         }
         
