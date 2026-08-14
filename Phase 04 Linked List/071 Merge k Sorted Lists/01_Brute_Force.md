@@ -69,9 +69,9 @@ public:
         return merged;
     }
 };
+----------------------------------------------------------------------------------------------------------------
+Another solution
 
-
-/*
 class Solution {
 
 private:
@@ -126,7 +126,7 @@ public:
         return partitionAndMerge(0, k - 1, lists);
     }
 };
-*/
+
 ```
 
 ---
