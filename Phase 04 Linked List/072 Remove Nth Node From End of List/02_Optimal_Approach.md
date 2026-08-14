@@ -78,6 +78,13 @@ public:
         return dummy.next;
     }
 };
+
+
+          slow
+            ↓
+dummy → [0] → [1] → [2] → [3] → [4] → [5] → NULL
+            ↑
+           fast
 ```
 
 ---
