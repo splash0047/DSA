@@ -55,24 +55,36 @@ Push numbers onto the stack. When an operator arrives, pop the top two numbers, 
 
 class Solution {
 public:
-    int evalRPN(const std::vector<std::string>& tokens) {
-        std::stack<long long> st;
-        
-        for (const std::string& t : tokens) {
-            if (t == "+" || t == "-" || t == "*" || t == "/") {
-                long long b = st.top(); st.pop();
-                long long a = st.top(); st.pop();
-                
-                if (t == "+") st.push(a + b);
-                else if (t == "-") st.push(a - b);
-                else if (t == "*") st.push(a * b);
-                else if (t == "/") st.push(a / b);
+    int evalRPN(std::vector<std::string>& tokens) {
+
+        std::stack<int> st;
+
+        for (string token : tokens) {
+
+            if (token == "+" || token == "-" ||
+                token == "*" || token == "/") {
+
+                int b = st.top();
+                st.pop();
+
+                int a = st.top();
+                st.pop();
+
+                if (token == "+")
+                    st.push(a + b);
+                else if (token == "-")
+                    st.push(a - b);
+                else if (token == "*")
+                    st.push(a * b);
+                else
+                    st.push(a / b);
+
             } else {
-                st.push(std::stoll(t));
+                st.push(stoi(token));
             }
         }
-        
-        return static_cast<int>(st.top());
+
+        return st.top();
     }
 };
 ```
