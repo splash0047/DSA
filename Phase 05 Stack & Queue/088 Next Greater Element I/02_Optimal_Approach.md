@@ -56,31 +56,30 @@ First compute Next Greater Element for all numbers in `nums2` using a Monotonic 
 
 class Solution {
 public:
-    std::vector<int> nextGreaterElement(const std::vector<int>& nums1, const std::vector<int>& nums2) {
-        std::unordered_map<int, int> next_greater;
-        std::stack<int> st;
-        
-        // Step 1: Precompute Next Greater Element for all nums2 entries
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+
+        stack<int> st;
+        unordered_map<int, int> next;
+
         for (int num : nums2) {
+
             while (!st.empty() && num > st.top()) {
-                next_greater[st.top()] = num;
+                next[st.top()] = num;
                 st.pop();
             }
+
             st.push(num);
         }
-        
-        while (!st.empty()) {
-            next_greater[st.top()] = -1;
-            st.pop();
+
+        vector<int> ans;
+
+        for (int num : nums1) {
+            if (next.count(num))
+                ans.push_back(next[num]);
+            else
+                ans.push_back(-1);
         }
-        
-        // Step 2: Answer queries for nums1 elements in O(1) time
-        std::vector<int> ans;
-        ans.reserve(nums1.size());
-        for (int x : nums1) {
-            ans.push_back(next_greater[x]);
-        }
-        
+
         return ans;
     }
 };
