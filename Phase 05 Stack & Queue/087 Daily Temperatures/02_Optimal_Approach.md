@@ -49,20 +49,25 @@ Keep track of unresolved cooler days on a stack. When a warmer day arrives, reso
 
 class Solution {
 public:
-    std::vector<int> dailyTemperatures(const std::vector<int>& temperatures) {
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+
         int n = temperatures.size();
-        std::vector<int> ans(n, 0);
-        std::stack<int> st; // Stores indices of unresolved days
-        
-        for (int i = 0; i < n; ++i) {
+        vector<int> ans(n, 0);
+        stack<int> st;
+
+        for (int i = 0; i < n; i++) {
+
             while (!st.empty() && temperatures[i] > temperatures[st.top()]) {
-                int prev_idx = st.top();
+
+                int j = st.top();
                 st.pop();
-                ans[prev_idx] = i - prev_idx;
+
+                ans[j] = i - j;
             }
+
             st.push(i);
         }
-        
+
         return ans;
     }
 };
