@@ -54,30 +54,36 @@ Push incoming asteroids onto a stack. When a left-moving asteroid meets right-mo
 #include <vector>
 #include <cmath>
 
+#include <vector>
+
 class Solution {
 public:
     std::vector<int> asteroidCollision(const std::vector<int>& asteroids) {
-        std::vector<int> st; // Acts as Stack
-        
+        std::vector<int> st;
+
         for (int ast : asteroids) {
-            bool alive = true;
-            
-            while (alive && !st.empty() && st.back() > 0 && ast < 0) {
+
+            while (!st.empty() && st.back() > 0 && ast < 0) {
+
                 if (st.back() < -ast) {
-                    st.pop_back(); // Top rightward asteroid explodes
-                } else if (st.back() == -ast) {
-                    st.pop_back(); // Both explode
-                    alive = false;
-                } else {
-                    alive = false; // Incoming leftward asteroid explodes
+                    st.pop_back();
+                }
+                else if (st.back() == -ast) {
+                    st.pop_back();
+                    ast = 0;
+                    break;
+                }
+                else {
+                    ast = 0;
+                    break;
                 }
             }
-            
-            if (alive) {
+
+            if (ast != 0) {
                 st.push_back(ast);
             }
         }
-        
+
         return st;
     }
 };
